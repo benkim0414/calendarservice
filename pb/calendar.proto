@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+package kordevaus;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "pb";
+
+message Event {
+  // Opaque identifier of the event.
+  string id = 1;
+
+  // Status of the event. Possible values are:
+  // "confirmed" - The event is confirmed. This is the default status.
+  // "tentative" - The event is tentatively confirmed.
+  // "cancelled" - The event is cancelled (deleted).
+  string status = 2;
+
+  // An absolute link to this event in the Google Calendar Web UI.
+  string html_link = 3;
+
+  // Creation time of the event (as a RFC3339 timestamp). Read-only.
+  string create_time = 4;
+
+  // Last modification time of the event (as a RFC3339 timestamp). Read-only.
+  string update_time = 5;
+
+  // Title of the event.
+  string summary = 6;
+
+  // Description of the event. Can contain HTML. Optional.
+  string description = 7;
+
+  // Geographic location of the event as free-form text. Optional.
+  string location = 8;
+
+  // The creator of the event.
+  string creator = 9;
+
+  // The organizer of the event.
+  string organizer = 10;
+
+  // The (inclusive) start time of the event (formatted according to RFC3339).
+  string start_time = 11;
+
+  // The (exclusive) end time of the event (formatted according to RFC3339).
+  string end_time = 12;
+
+  // Event unique identifier as defined in RFC5545.
+  string i_cal_uid = 13;
+
+  // The attendees of the event.
+  repeated Attendee attendees = 14;
+}
+
+message Attendee {
+  // The attendee's Profile ID, if available.
+  string id = 1;
+
+  // The attendee's email address, if available.
+  string email = 2;
+
+  // The attendee's name, if available.
+  string display_name = 3;
+
+  // Whether the attendee is the organizer of the event.
+  bool organizer = 4;
+
+  // Whether this is an optional attendee.
+  bool optional = 5;
+
+  // The attendee's response status. Possible values are:
+  // "needsAction" - The attendee has not responded to the invitation.
+  // "declined" - The attendee has declined the invitation.
+  // "tentative" - The attendee has tentatively accepted the invitation.
+  // "accepted" - The attendee has accepted the invitation.
+  string response_status = 6;
+
+  // The attendee's response comment.
+  string comment = 7;
+
+  // Number of additional guests.
+  int64 additionalGuests = 8;
+}
+
+service Calendar {
+  option (google.api.default_host) = "localhost:50051";
+
+  // Lists events in a calendar.
+  rpc ListEvents(ListEventsRequest) returns (ListEventsResponse) {
+    option (google.api.http) = {
+      get: "/v1/{parent=calendars/*}/events"
+    };
+  }
+
+  // Gets an event.
+  rpc GetEvent(GetEventRequest) returns (Event) {
+    option (google.api.http) = {
+      get: "/v1/{name=calendars/*/events/*}"
+    };
+  }
+
+  // Creates an event in a calendar.
+  rpc CreateEvent(CreateEventRequest) returns (Event) {
+    option (google.api.http) = {
+      post: "/v1/{parent=calendars/*}/events"
+      body: "event"
+    };
+  }
+
+  // Deletes an event.
+  rpc DeleteEvent(DeleteEventRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/{name=calendars/*/events/*}"
+    };
+  }
+}
+
+message ListEventsRequest {
+  // The parent resource name.
+  string parent = 1;
+
+  // The maximum number of items to return.
+  int32 page_size = 2;
+
+  // The next_page_token value returned from a previous List request, if any.
+  string page_token = 3;
+}
+
+message ListEventsResponse {
+  // The field name should match the noun "events" in the method name.  There
+  // will be a maximum number of items returned based on the page_size field
+  // in the request.
+  repeated Event events = 1;
+
+  // Token to retrieve the next page of results, or empty if there are no
+  // more results in the list.
+  string next_page_token = 2;
+}
+
+message GetEventRequest {
+  // The field will contain name of the resource requested.
+  string name = 1;
+}
+
+message CreateEventRequest {
+  // The parent resource name where the event is to be created.
+  string parent = 1;
+
+  // The text describing the event to be created.
+  string text = 2;
+}
+
+message DeleteEventRequest {
+  // The resource name of the event to be deleted.
+  string name = 1;
+}
