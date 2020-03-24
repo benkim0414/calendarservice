@@ -48,7 +48,7 @@ func main() {
 		),
 	)
 	healthpb.RegisterHealthServer(s, health.NewServer())
-	calendarpb.RegisterCalendarServer(s, svc)
+	calendarpb.RegisterCalendarServiceServer(s, svc)
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
 		logger.Fatal("failed to serve: %v", zap.Error(err))

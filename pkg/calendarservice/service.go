@@ -22,6 +22,36 @@ func New(ctx context.Context, opts ...option.ClientOption) (*service, error) {
 	return &service{client: client}, nil
 }
 
+func (svc *service) GetCalendar(ctx context.Context, req *calendarpb.GetCalendarRequest) (*calendarpb.Calendar, error) {
+	calendarID := strings.Split(req.Name, "/")[1]
+	calendar, err := svc.client.Calendars.Get(calendarID).Do()
+	if err != nil {
+		return &calendarpb.Calendar{}, err
+	}
+	return newCalendar(calendar), nil
+}
+
+func (svc *service) CreateCalendar(ctx context.Context, req *calendarpb.CreateCalendarRequest) (*calendarpb.Calendar, error) {
+	calendar, err := svc.client.Calendars.Insert(&calendar.Calendar{
+		Summary:     req.Calendar.Summary,
+		Description: req.Calendar.Description,
+		TimeZone:    req.Calendar.TimeZone,
+	}).Do()
+	if err != nil {
+		return &calendarpb.Calendar{}, err
+	}
+	return newCalendar(calendar), nil
+}
+
+func (svc *service) DeleteCalendar(ctx context.Context, req *calendarpb.DeleteCalendarRequest) (*empty.Empty, error) {
+	calendarID := strings.Split(req.Name, "/")[1]
+	err := svc.client.Calendars.Delete(calendarID).Do()
+	if err != nil {
+		return &empty.Empty{}, err
+	}
+	return &empty.Empty{}, nil
+}
+
 func (svc *service) ListEvents(ctx context.Context, req *calendarpb.ListEventsRequest) (*calendarpb.ListEventsResponse, error) {
 	calendarID := strings.Split(req.Parent, "/")[1]
 	res, err := svc.client.Events.List(calendarID).Do()
@@ -65,6 +95,16 @@ func (svc *service) DeleteEvent(ctx context.Context, req *calendarpb.DeleteEvent
 		return &empty.Empty{}, err
 	}
 	return &empty.Empty{}, nil
+}
+
+func newCalendar(calendar *calendar.Calendar) *calendarpb.Calendar {
+	return &calendarpb.Calendar{
+		Id:          calendar.Id,
+		Summary:     calendar.Summary,
+		Description: calendar.Description,
+		Location:    calendar.Location,
+		TimeZone:    calendar.TimeZone,
+	}
 }
 
 func newEvent(event *calendar.Event) *calendarpb.Event {
