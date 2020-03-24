@@ -13,6 +13,8 @@ import (
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -45,6 +47,7 @@ func main() {
 			grpc_zap.StreamServerInterceptor(logger),
 		),
 	)
+	healthpb.RegisterHealthServer(s, health.NewServer())
 	calendarpb.RegisterCalendarServer(s, svc)
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
