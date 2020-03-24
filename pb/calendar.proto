@@ -8,6 +8,23 @@ import "google/protobuf/empty.proto";
 
 option go_package = "pb";
 
+message Calendar {
+  // Identifier of the calendar.
+  string id = 1;
+
+  // Title of the calendar.
+  string summary = 2;
+
+  // Description of the calendar. Optional.
+  string description = 3;
+
+  // Geographic location of the calendar as free-form text. Optional.
+  string location = 4;
+
+  // The time zone of the calendar. (Formatted as an IANA Time Zone Database name, e.g. "Europe/Zurich".) Optional.
+  string time_zone = 5;
+}
+
 message Event {
   // Opaque identifier of the event.
   string id = 1;
@@ -85,8 +102,30 @@ message Attendee {
   int64 additionalGuests = 8;
 }
 
-service Calendar {
+service CalendarService {
   option (google.api.default_host) = "localhost:50051";
+
+  // Returns metadata for a calendar.
+  rpc GetCalendar(GetCalendarRequest) returns (Calendar) {
+    option (google.api.http) = {
+      get: "/v1/{name=calendars/*}"
+    };
+  }
+
+  // Creates a secondary calendar.
+  rpc CreateCalendar(CreateCalendarRequest) returns (Calendar) {
+    option (google.api.http) = {
+      post: "/v1/calendars"
+      body: "calendar"
+    };
+  }
+
+  // Deletes a secondary calendar.
+  rpc DeleteCalendar(DeleteCalendarRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/{name=calendars/*}"
+    };
+  }
 
   // Lists events in a calendar.
   rpc ListEvents(ListEventsRequest) returns (ListEventsResponse) {
@@ -116,6 +155,21 @@ service Calendar {
       delete: "/v1/{name=calendars/*/events/*}"
     };
   }
+}
+
+message GetCalendarRequest {
+  // The field will contain name of the resource requested.
+  string name = 1;
+}
+
+message CreateCalendarRequest {
+  // The calendar to create.
+  Calendar calendar = 1;
+}
+
+message DeleteCalendarRequest {
+  // The resource name of the calendar to be deleted.
+  string name = 1;
 }
 
 message ListEventsRequest {
