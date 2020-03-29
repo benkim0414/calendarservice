@@ -26,6 +26,82 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type Calendar struct {
+	// Identifier of the calendar.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Title of the calendar.
+	Summary string `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
+	// Description of the calendar. Optional.
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Geographic location of the calendar as free-form text. Optional.
+	Location string `protobuf:"bytes,4,opt,name=location,proto3" json:"location,omitempty"`
+	// The time zone of the calendar. (Formatted as an IANA Time Zone Database name, e.g. "Europe/Zurich".) Optional.
+	TimeZone             string   `protobuf:"bytes,5,opt,name=time_zone,json=timeZone,proto3" json:"time_zone,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Calendar) Reset()         { *m = Calendar{} }
+func (m *Calendar) String() string { return proto.CompactTextString(m) }
+func (*Calendar) ProtoMessage()    {}
+func (*Calendar) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9149431be0552851, []int{0}
+}
+
+func (m *Calendar) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Calendar.Unmarshal(m, b)
+}
+func (m *Calendar) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Calendar.Marshal(b, m, deterministic)
+}
+func (m *Calendar) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Calendar.Merge(m, src)
+}
+func (m *Calendar) XXX_Size() int {
+	return xxx_messageInfo_Calendar.Size(m)
+}
+func (m *Calendar) XXX_DiscardUnknown() {
+	xxx_messageInfo_Calendar.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Calendar proto.InternalMessageInfo
+
+func (m *Calendar) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *Calendar) GetSummary() string {
+	if m != nil {
+		return m.Summary
+	}
+	return ""
+}
+
+func (m *Calendar) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *Calendar) GetLocation() string {
+	if m != nil {
+		return m.Location
+	}
+	return ""
+}
+
+func (m *Calendar) GetTimeZone() string {
+	if m != nil {
+		return m.TimeZone
+	}
+	return ""
+}
+
 type Event struct {
 	// Opaque identifier of the event.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -67,7 +143,7 @@ func (m *Event) Reset()         { *m = Event{} }
 func (m *Event) String() string { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{0}
+	return fileDescriptor_9149431be0552851, []int{1}
 }
 
 func (m *Event) XXX_Unmarshal(b []byte) error {
@@ -216,7 +292,7 @@ func (m *Attendee) Reset()         { *m = Attendee{} }
 func (m *Attendee) String() string { return proto.CompactTextString(m) }
 func (*Attendee) ProtoMessage()    {}
 func (*Attendee) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{1}
+	return fileDescriptor_9149431be0552851, []int{2}
 }
 
 func (m *Attendee) XXX_Unmarshal(b []byte) error {
@@ -293,6 +369,225 @@ func (m *Attendee) GetAdditionalGuests() int64 {
 	return 0
 }
 
+type ListCalendarsRequest struct {
+	// Maximum number of entries returned on one result page. By default the value
+	// is 100 entries. The page size can never be larger than 250 entries. Optional.
+	PageSize int32 `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Token specifying which result page to return. Optional.
+	PageToken            string   `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListCalendarsRequest) Reset()         { *m = ListCalendarsRequest{} }
+func (m *ListCalendarsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListCalendarsRequest) ProtoMessage()    {}
+func (*ListCalendarsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9149431be0552851, []int{3}
+}
+
+func (m *ListCalendarsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListCalendarsRequest.Unmarshal(m, b)
+}
+func (m *ListCalendarsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListCalendarsRequest.Marshal(b, m, deterministic)
+}
+func (m *ListCalendarsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCalendarsRequest.Merge(m, src)
+}
+func (m *ListCalendarsRequest) XXX_Size() int {
+	return xxx_messageInfo_ListCalendarsRequest.Size(m)
+}
+func (m *ListCalendarsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCalendarsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCalendarsRequest proto.InternalMessageInfo
+
+func (m *ListCalendarsRequest) GetPageSize() int32 {
+	if m != nil {
+		return m.PageSize
+	}
+	return 0
+}
+
+func (m *ListCalendarsRequest) GetPageToken() string {
+	if m != nil {
+		return m.PageToken
+	}
+	return ""
+}
+
+type ListCalendarsResponse struct {
+	// Calendars that are present on the user's calendar list.
+	Calendars []*Calendar `protobuf:"bytes,1,rep,name=calendars,proto3" json:"calendars,omitempty"`
+	// Token used to access the next page of this result.
+	NextPageToken        string   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListCalendarsResponse) Reset()         { *m = ListCalendarsResponse{} }
+func (m *ListCalendarsResponse) String() string { return proto.CompactTextString(m) }
+func (*ListCalendarsResponse) ProtoMessage()    {}
+func (*ListCalendarsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9149431be0552851, []int{4}
+}
+
+func (m *ListCalendarsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListCalendarsResponse.Unmarshal(m, b)
+}
+func (m *ListCalendarsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListCalendarsResponse.Marshal(b, m, deterministic)
+}
+func (m *ListCalendarsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCalendarsResponse.Merge(m, src)
+}
+func (m *ListCalendarsResponse) XXX_Size() int {
+	return xxx_messageInfo_ListCalendarsResponse.Size(m)
+}
+func (m *ListCalendarsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCalendarsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCalendarsResponse proto.InternalMessageInfo
+
+func (m *ListCalendarsResponse) GetCalendars() []*Calendar {
+	if m != nil {
+		return m.Calendars
+	}
+	return nil
+}
+
+func (m *ListCalendarsResponse) GetNextPageToken() string {
+	if m != nil {
+		return m.NextPageToken
+	}
+	return ""
+}
+
+type GetCalendarRequest struct {
+	// The field will contain name of the resource requested.
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetCalendarRequest) Reset()         { *m = GetCalendarRequest{} }
+func (m *GetCalendarRequest) String() string { return proto.CompactTextString(m) }
+func (*GetCalendarRequest) ProtoMessage()    {}
+func (*GetCalendarRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9149431be0552851, []int{5}
+}
+
+func (m *GetCalendarRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCalendarRequest.Unmarshal(m, b)
+}
+func (m *GetCalendarRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCalendarRequest.Marshal(b, m, deterministic)
+}
+func (m *GetCalendarRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCalendarRequest.Merge(m, src)
+}
+func (m *GetCalendarRequest) XXX_Size() int {
+	return xxx_messageInfo_GetCalendarRequest.Size(m)
+}
+func (m *GetCalendarRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCalendarRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCalendarRequest proto.InternalMessageInfo
+
+func (m *GetCalendarRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+type CreateCalendarRequest struct {
+	// The calendar to create.
+	Calendar             *Calendar `protobuf:"bytes,1,opt,name=calendar,proto3" json:"calendar,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *CreateCalendarRequest) Reset()         { *m = CreateCalendarRequest{} }
+func (m *CreateCalendarRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateCalendarRequest) ProtoMessage()    {}
+func (*CreateCalendarRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9149431be0552851, []int{6}
+}
+
+func (m *CreateCalendarRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CreateCalendarRequest.Unmarshal(m, b)
+}
+func (m *CreateCalendarRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CreateCalendarRequest.Marshal(b, m, deterministic)
+}
+func (m *CreateCalendarRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateCalendarRequest.Merge(m, src)
+}
+func (m *CreateCalendarRequest) XXX_Size() int {
+	return xxx_messageInfo_CreateCalendarRequest.Size(m)
+}
+func (m *CreateCalendarRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateCalendarRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateCalendarRequest proto.InternalMessageInfo
+
+func (m *CreateCalendarRequest) GetCalendar() *Calendar {
+	if m != nil {
+		return m.Calendar
+	}
+	return nil
+}
+
+type DeleteCalendarRequest struct {
+	// The resource name of the calendar to be deleted.
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeleteCalendarRequest) Reset()         { *m = DeleteCalendarRequest{} }
+func (m *DeleteCalendarRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteCalendarRequest) ProtoMessage()    {}
+func (*DeleteCalendarRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9149431be0552851, []int{7}
+}
+
+func (m *DeleteCalendarRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeleteCalendarRequest.Unmarshal(m, b)
+}
+func (m *DeleteCalendarRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeleteCalendarRequest.Marshal(b, m, deterministic)
+}
+func (m *DeleteCalendarRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteCalendarRequest.Merge(m, src)
+}
+func (m *DeleteCalendarRequest) XXX_Size() int {
+	return xxx_messageInfo_DeleteCalendarRequest.Size(m)
+}
+func (m *DeleteCalendarRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteCalendarRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteCalendarRequest proto.InternalMessageInfo
+
+func (m *DeleteCalendarRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
 type ListEventsRequest struct {
 	// The parent resource name.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
@@ -309,7 +604,7 @@ func (m *ListEventsRequest) Reset()         { *m = ListEventsRequest{} }
 func (m *ListEventsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListEventsRequest) ProtoMessage()    {}
 func (*ListEventsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{2}
+	return fileDescriptor_9149431be0552851, []int{8}
 }
 
 func (m *ListEventsRequest) XXX_Unmarshal(b []byte) error {
@@ -368,7 +663,7 @@ func (m *ListEventsResponse) Reset()         { *m = ListEventsResponse{} }
 func (m *ListEventsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListEventsResponse) ProtoMessage()    {}
 func (*ListEventsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{3}
+	return fileDescriptor_9149431be0552851, []int{9}
 }
 
 func (m *ListEventsResponse) XXX_Unmarshal(b []byte) error {
@@ -415,7 +710,7 @@ func (m *GetEventRequest) Reset()         { *m = GetEventRequest{} }
 func (m *GetEventRequest) String() string { return proto.CompactTextString(m) }
 func (*GetEventRequest) ProtoMessage()    {}
 func (*GetEventRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{4}
+	return fileDescriptor_9149431be0552851, []int{10}
 }
 
 func (m *GetEventRequest) XXX_Unmarshal(b []byte) error {
@@ -457,7 +752,7 @@ func (m *CreateEventRequest) Reset()         { *m = CreateEventRequest{} }
 func (m *CreateEventRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateEventRequest) ProtoMessage()    {}
 func (*CreateEventRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{5}
+	return fileDescriptor_9149431be0552851, []int{11}
 }
 
 func (m *CreateEventRequest) XXX_Unmarshal(b []byte) error {
@@ -504,7 +799,7 @@ func (m *DeleteEventRequest) Reset()         { *m = DeleteEventRequest{} }
 func (m *DeleteEventRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteEventRequest) ProtoMessage()    {}
 func (*DeleteEventRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9149431be0552851, []int{6}
+	return fileDescriptor_9149431be0552851, []int{12}
 }
 
 func (m *DeleteEventRequest) XXX_Unmarshal(b []byte) error {
@@ -533,8 +828,14 @@ func (m *DeleteEventRequest) GetName() string {
 }
 
 func init() {
+	proto.RegisterType((*Calendar)(nil), "kordevaus.Calendar")
 	proto.RegisterType((*Event)(nil), "kordevaus.Event")
 	proto.RegisterType((*Attendee)(nil), "kordevaus.Attendee")
+	proto.RegisterType((*ListCalendarsRequest)(nil), "kordevaus.ListCalendarsRequest")
+	proto.RegisterType((*ListCalendarsResponse)(nil), "kordevaus.ListCalendarsResponse")
+	proto.RegisterType((*GetCalendarRequest)(nil), "kordevaus.GetCalendarRequest")
+	proto.RegisterType((*CreateCalendarRequest)(nil), "kordevaus.CreateCalendarRequest")
+	proto.RegisterType((*DeleteCalendarRequest)(nil), "kordevaus.DeleteCalendarRequest")
 	proto.RegisterType((*ListEventsRequest)(nil), "kordevaus.ListEventsRequest")
 	proto.RegisterType((*ListEventsResponse)(nil), "kordevaus.ListEventsResponse")
 	proto.RegisterType((*GetEventRequest)(nil), "kordevaus.GetEventRequest")
@@ -542,72 +843,95 @@ func init() {
 	proto.RegisterType((*DeleteEventRequest)(nil), "kordevaus.DeleteEventRequest")
 }
 
-func init() { proto.RegisterFile("pb/calendar.proto", fileDescriptor_9149431be0552851) }
+func init() {
+	proto.RegisterFile("pb/calendar.proto", fileDescriptor_9149431be0552851)
+}
 
 var fileDescriptor_9149431be0552851 = []byte{
-	// 757 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xcb, 0x4e, 0x23, 0x47,
-	0x14, 0x95, 0x9f, 0xb4, 0xaf, 0x01, 0x43, 0x25, 0x22, 0x9d, 0x06, 0x04, 0xb4, 0x94, 0x60, 0x79,
-	0xe1, 0x06, 0x22, 0x36, 0x48, 0x91, 0x42, 0x08, 0x62, 0x83, 0xa2, 0xc8, 0x90, 0x4d, 0x36, 0xad,
-	0xb2, 0xfb, 0x62, 0x4a, 0xee, 0xae, 0xee, 0x74, 0x95, 0x11, 0x30, 0x62, 0x33, 0xbf, 0x30, 0x1f,
-	0x31, 0xff, 0x32, 0xdb, 0x99, 0x4f, 0x98, 0xcf, 0x98, 0xc5, 0xa8, 0x1e, 0x6d, 0x1a, 0x0c, 0x62,
-	0xe5, 0xbe, 0xe7, 0x5c, 0xdd, 0x5b, 0xe7, 0x9c, 0x72, 0xc1, 0x6a, 0x36, 0x0c, 0x46, 0x34, 0x46,
-	0x1e, 0xd1, 0xbc, 0x9f, 0xe5, 0xa9, 0x4c, 0x49, 0x6b, 0x92, 0xe6, 0x11, 0xde, 0xd0, 0xa9, 0xf0,
-	0x36, 0xc6, 0x69, 0x3a, 0x8e, 0x31, 0xa0, 0x19, 0x0b, 0x28, 0xe7, 0xa9, 0xa4, 0x92, 0xa5, 0x5c,
-	0x98, 0x46, 0xef, 0xa7, 0x12, 0x3b, 0x8a, 0x19, 0x72, 0x69, 0x89, 0x75, 0x4b, 0xe8, 0x6a, 0x38,
-	0xbd, 0x0a, 0x30, 0xc9, 0xe4, 0x9d, 0x21, 0xfd, 0x8f, 0x35, 0x68, 0x9c, 0xde, 0x20, 0x97, 0x64,
-	0x19, 0xaa, 0x2c, 0x72, 0x2b, 0xdb, 0x95, 0x6e, 0x6b, 0x50, 0x65, 0x11, 0x59, 0x83, 0xa6, 0x90,
-	0x54, 0x4e, 0x85, 0x5b, 0xd5, 0x98, 0xad, 0xc8, 0x3a, 0xb4, 0xae, 0x65, 0x12, 0x87, 0x31, 0xe3,
-	0x13, 0xb7, 0xa6, 0x29, 0x47, 0x01, 0xe7, 0x8c, 0x4f, 0xc8, 0x16, 0xb4, 0x47, 0x39, 0x52, 0x89,
-	0xa1, 0x64, 0x09, 0xba, 0x75, 0x4d, 0x83, 0x81, 0x2e, 0x59, 0x82, 0xaa, 0x61, 0x9a, 0x45, 0xb3,
-	0x86, 0x86, 0x69, 0x30, 0x90, 0x6e, 0x70, 0x61, 0x41, 0x4c, 0x93, 0x84, 0xe6, 0x77, 0x6e, 0x53,
-	0x93, 0x45, 0x49, 0xb6, 0xa1, 0x1d, 0xa1, 0x18, 0xe5, 0x2c, 0x53, 0xb2, 0xdd, 0x05, 0xcd, 0x96,
-	0x21, 0xe2, 0x81, 0x13, 0xa7, 0x23, 0xed, 0x8a, 0xeb, 0x98, 0x93, 0x15, 0xb5, 0x9a, 0xab, 0x8f,
-	0x91, 0xe6, 0x6e, 0xcb, 0xcc, 0xb5, 0x25, 0xd9, 0x80, 0x56, 0x9a, 0x8f, 0x29, 0x67, 0xf7, 0x98,
-	0xbb, 0xa0, 0xb9, 0x47, 0x80, 0x6c, 0x02, 0x08, 0x49, 0x73, 0x69, 0xce, 0xdb, 0x36, 0xb4, 0x46,
-	0xf4, 0x71, 0x7f, 0x06, 0x07, 0x79, 0x64, 0xc8, 0x45, 0x33, 0x17, 0x79, 0xa4, 0x29, 0x0f, 0x5a,
-	0x2c, 0x1c, 0xd1, 0x38, 0x9c, 0xb2, 0xc8, 0x5d, 0x32, 0x1c, 0x3b, 0xa1, 0xf1, 0xbf, 0x2c, 0x22,
-	0xfb, 0xd0, 0xa2, 0x52, 0x22, 0x8f, 0x10, 0x85, 0xbb, 0xbc, 0x5d, 0xeb, 0xb6, 0x0f, 0x7e, 0xe8,
-	0xcf, 0x92, 0xee, 0x1f, 0x5b, 0x6e, 0xf0, 0xd8, 0xe5, 0x7f, 0xab, 0x80, 0x53, 0xe0, 0x73, 0x61,
-	0xfd, 0x08, 0x0d, 0x4c, 0x28, 0x8b, 0x6d, 0x56, 0xa6, 0x20, 0x3b, 0xb0, 0x18, 0x31, 0x91, 0xc5,
-	0xf4, 0x2e, 0xe4, 0x34, 0x41, 0x9b, 0x56, 0xdb, 0x62, 0x7f, 0xd3, 0x04, 0x9f, 0x8a, 0x57, 0x71,
-	0x39, 0x65, 0xf1, 0x1e, 0x38, 0xa9, 0xb6, 0x96, 0xc6, 0x3a, 0x2a, 0x67, 0x30, 0xab, 0xc9, 0x2e,
-	0x74, 0x72, 0x14, 0x59, 0xca, 0x05, 0x86, 0xf6, 0xa2, 0x98, 0xc0, 0x96, 0x0b, 0xf8, 0xc2, 0x5c,
-	0x18, 0xe5, 0x7c, 0x9a, 0x24, 0xc8, 0xa5, 0xcd, 0xac, 0x28, 0x49, 0x0f, 0x56, 0x68, 0x14, 0x31,
-	0x33, 0xf0, 0x6c, 0x8a, 0x42, 0x0a, 0x9d, 0x5b, 0x6d, 0x30, 0x87, 0xfb, 0x63, 0x58, 0x3d, 0x67,
-	0x42, 0xea, 0xbb, 0x2a, 0x06, 0xf8, 0xbf, 0x42, 0xd5, 0x1d, 0xcd, 0x68, 0xae, 0x26, 0x1b, 0x2b,
-	0x6c, 0xa5, 0xee, 0x68, 0x46, 0xc7, 0x18, 0x0a, 0x76, 0x8f, 0xda, 0x92, 0xc6, 0xc0, 0x51, 0xc0,
-	0x05, 0xbb, 0x47, 0x95, 0xa8, 0x26, 0x65, 0x3a, 0x41, 0x6e, 0x3d, 0xd1, 0xed, 0x97, 0x0a, 0xf0,
-	0xaf, 0x80, 0x94, 0x17, 0x19, 0x29, 0xa4, 0x0b, 0x4d, 0xd4, 0x88, 0x5b, 0xd1, 0x69, 0xad, 0x94,
-	0xd2, 0xd2, 0xad, 0x03, 0xcb, 0x93, 0x5f, 0xa1, 0xc3, 0xf1, 0x56, 0x86, 0xa5, 0x1d, 0x26, 0x94,
-	0x25, 0x05, 0xff, 0x33, 0xdb, 0xf3, 0x0b, 0x74, 0xce, 0xd0, 0xac, 0x29, 0xe4, 0x10, 0xa8, 0xeb,
-	0x9c, 0x8c, 0x18, 0xfd, 0xed, 0xff, 0x01, 0xe4, 0x44, 0xff, 0x7d, 0x9e, 0x74, 0xbe, 0x26, 0x9c,
-	0x40, 0x5d, 0xe2, 0xad, 0xb4, 0x1b, 0xf5, 0xb7, 0xdf, 0x05, 0xf2, 0x17, 0xc6, 0xf8, 0x6c, 0xc2,
-	0x0b, 0xbb, 0x0e, 0xbe, 0xd4, 0xc0, 0x39, 0xb1, 0xcf, 0x0f, 0xc9, 0x01, 0x1e, 0x7d, 0x20, 0x1b,
-	0x25, 0xbd, 0x73, 0x39, 0x78, 0x9b, 0xaf, 0xb0, 0xc6, 0x3c, 0x7f, 0xf7, 0xfd, 0xe7, 0xaf, 0x1f,
-	0xaa, 0x3b, 0x64, 0x2b, 0xb8, 0xd9, 0x0f, 0xde, 0x99, 0xa3, 0xfe, 0x5e, 0xbc, 0x73, 0x22, 0xe8,
-	0x3d, 0x04, 0xd6, 0x3b, 0x0a, 0x4e, 0xe1, 0x09, 0xf1, 0x4a, 0x33, 0x9f, 0x19, 0xe5, 0xcd, 0xb9,
-	0xff, 0x6c, 0x85, 0x52, 0x53, 0x5e, 0x60, 0xe7, 0x07, 0xbd, 0x07, 0xc2, 0xa1, 0x5d, 0xf2, 0x93,
-	0x94, 0x4f, 0x3e, 0xef, 0xf3, 0x0b, 0x8b, 0xfa, 0x7a, 0x51, 0xd7, 0x7f, 0x4b, 0xcb, 0x51, 0x43,
-	0xff, 0x92, 0x04, 0xda, 0x25, 0xf7, 0x9f, 0xec, 0x9b, 0x4f, 0xc5, 0x5b, 0xeb, 0x9b, 0xc7, 0xba,
-	0x5f, 0x3c, 0xd6, 0xfd, 0x53, 0xf5, 0x58, 0x17, 0xf2, 0x7a, 0x6f, 0xc9, 0xf3, 0xc8, 0xa7, 0xe3,
-	0x8e, 0x7a, 0xf3, 0xe2, 0xeb, 0x54, 0xc8, 0xa3, 0xc3, 0xbd, 0xbd, 0xc3, 0xfd, 0x3f, 0xeb, 0xff,
-	0x55, 0xb3, 0xe1, 0xb0, 0xa9, 0x47, 0xfe, 0xf6, 0x3d, 0x00, 0x00, 0xff, 0xff, 0x86, 0x65, 0x9b,
-	0x68, 0x64, 0x06, 0x00, 0x00,
+	// 962 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x56, 0xcd, 0x6e, 0xdb, 0x46,
+	0x10, 0x86, 0x24, 0x4b, 0xa6, 0x46, 0xb1, 0x94, 0x6c, 0x63, 0x97, 0x61, 0xec, 0xda, 0x21, 0xd0,
+	0x46, 0x70, 0x01, 0x29, 0x4e, 0x91, 0x8b, 0x81, 0x02, 0x4d, 0xdd, 0xc0, 0x3d, 0x04, 0x45, 0x21,
+	0xa7, 0x97, 0x5c, 0x88, 0xb5, 0x38, 0x91, 0xb7, 0x26, 0x97, 0x2c, 0x77, 0x65, 0xd8, 0x2e, 0x7a,
+	0xe9, 0x0b, 0xf4, 0xd0, 0x87, 0xe8, 0xbb, 0xf4, 0xda, 0x57, 0xe8, 0x63, 0x14, 0x68, 0xb1, 0x3f,
+	0xa4, 0x48, 0x51, 0xb2, 0x7b, 0xb2, 0x76, 0x66, 0x38, 0xdf, 0xcc, 0xf7, 0x7d, 0x4b, 0x1a, 0x1e,
+	0xa5, 0xe7, 0xe3, 0x29, 0x8d, 0x90, 0x87, 0x34, 0x1b, 0xa5, 0x59, 0x22, 0x13, 0xd2, 0xbd, 0x4c,
+	0xb2, 0x10, 0xaf, 0xe8, 0x5c, 0x78, 0xbb, 0xb3, 0x24, 0x99, 0x45, 0x38, 0xa6, 0x29, 0x1b, 0x53,
+	0xce, 0x13, 0x49, 0x25, 0x4b, 0xb8, 0x30, 0x85, 0xde, 0xc7, 0xa5, 0xec, 0x34, 0x62, 0xc8, 0xa5,
+	0x4d, 0x3c, 0xb5, 0x09, 0x7d, 0x3a, 0x9f, 0x7f, 0x18, 0x63, 0x9c, 0xca, 0x1b, 0x93, 0xf4, 0x7f,
+	0x6b, 0x80, 0x73, 0x62, 0x11, 0x49, 0x1f, 0x9a, 0x2c, 0x74, 0x1b, 0x07, 0x8d, 0x61, 0x77, 0xd2,
+	0x64, 0x21, 0x71, 0x61, 0x53, 0xcc, 0xe3, 0x98, 0x66, 0x37, 0x6e, 0x53, 0x07, 0xf3, 0x23, 0x39,
+	0x80, 0x5e, 0x88, 0x62, 0x9a, 0xb1, 0x54, 0x8d, 0xe0, 0xb6, 0x74, 0xb6, 0x1c, 0x22, 0x1e, 0x38,
+	0x51, 0x32, 0xd5, 0x13, 0xba, 0x1b, 0x3a, 0x5d, 0x9c, 0xc9, 0x53, 0xe8, 0x4a, 0x16, 0x63, 0x70,
+	0x9b, 0x70, 0x74, 0xdb, 0x26, 0xa9, 0x02, 0xef, 0x13, 0x8e, 0xfe, 0x1f, 0x2d, 0x68, 0xbf, 0xb9,
+	0x42, 0x2e, 0x6b, 0xe3, 0xec, 0x40, 0x47, 0x48, 0x2a, 0xe7, 0xc2, 0x4e, 0x63, 0x4f, 0xaa, 0xdd,
+	0x85, 0x8c, 0xa3, 0x20, 0x62, 0xfc, 0xd2, 0x8e, 0xe2, 0xa8, 0xc0, 0x5b, 0xc6, 0x2f, 0xc9, 0x3e,
+	0xf4, 0xa6, 0x19, 0x52, 0x89, 0x81, 0x42, 0xb0, 0xa3, 0x80, 0x09, 0xbd, 0x63, 0x31, 0xaa, 0x82,
+	0x79, 0x1a, 0x16, 0x05, 0x66, 0x1c, 0x30, 0x21, 0x5d, 0x50, 0x62, 0xa1, 0x73, 0x27, 0x0b, 0x9b,
+	0x77, 0xb3, 0xe0, 0x2c, 0xb1, 0xe0, 0xc2, 0xa6, 0x1e, 0x23, 0xc9, 0xdc, 0xae, 0xe9, 0x6b, 0x8f,
+	0x64, 0x17, 0xba, 0x49, 0x36, 0xa3, 0x9c, 0xdd, 0x62, 0xe6, 0x82, 0xce, 0x2d, 0x02, 0x64, 0x0f,
+	0x40, 0x48, 0x9a, 0x49, 0x33, 0x6f, 0xcf, 0xa4, 0x75, 0x44, 0x8f, 0xfb, 0x04, 0x1c, 0xe4, 0xa1,
+	0x49, 0x3e, 0x30, 0x7d, 0x91, 0x87, 0x3a, 0xe5, 0x41, 0x97, 0x05, 0x53, 0x1a, 0x05, 0x73, 0x16,
+	0xba, 0x5b, 0x26, 0xc7, 0x4e, 0x68, 0xf4, 0x03, 0x0b, 0xc9, 0x11, 0x74, 0xa9, 0x94, 0xc8, 0x43,
+	0x44, 0xe1, 0xf6, 0x0f, 0x5a, 0xc3, 0xde, 0xcb, 0x8f, 0x46, 0x85, 0xf7, 0x46, 0xaf, 0x6d, 0x6e,
+	0xb2, 0xa8, 0xf2, 0xff, 0x69, 0x80, 0x93, 0xc7, 0x6b, 0x62, 0x3d, 0x86, 0x36, 0xc6, 0x94, 0x45,
+	0x56, 0x2b, 0x73, 0x20, 0xcf, 0xe0, 0x41, 0xc8, 0x44, 0x1a, 0xd1, 0x9b, 0x80, 0xd3, 0x18, 0x0b,
+	0xe3, 0x98, 0xd8, 0x77, 0x34, 0xc6, 0xea, 0xf2, 0x4a, 0x2e, 0xa7, 0xbc, 0xbc, 0x07, 0x4e, 0xa2,
+	0xa9, 0xa5, 0x91, 0x96, 0xca, 0x99, 0x14, 0x67, 0xf2, 0x1c, 0x06, 0x19, 0x8a, 0x34, 0xe1, 0x02,
+	0x03, 0x6b, 0x14, 0x23, 0x58, 0x3f, 0x0f, 0x9f, 0x19, 0xc3, 0x28, 0xe6, 0x93, 0x38, 0x46, 0x2e,
+	0xad, 0x66, 0xf9, 0x91, 0x1c, 0xc2, 0x43, 0x1a, 0x86, 0xcc, 0x34, 0x3c, 0x9d, 0xa3, 0x90, 0x42,
+	0xeb, 0xd6, 0x9a, 0xd4, 0xe2, 0xfe, 0x04, 0x1e, 0xbf, 0x65, 0x42, 0xe6, 0xb7, 0x47, 0x4c, 0xf0,
+	0x27, 0x95, 0x50, 0x76, 0x4c, 0xe9, 0x0c, 0x03, 0xc1, 0x6e, 0x51, 0x13, 0xd2, 0x9e, 0x38, 0x2a,
+	0x70, 0xc6, 0x6e, 0x51, 0x89, 0xa7, 0x93, 0x32, 0xb9, 0x44, 0x6e, 0xb9, 0xd1, 0xe5, 0xef, 0x54,
+	0xc0, 0xcf, 0x60, 0x7b, 0xa9, 0xa7, 0x19, 0x5c, 0xc9, 0x93, 0xbf, 0x18, 0x84, 0xdb, 0xa8, 0xc9,
+	0x93, 0x3f, 0x30, 0x59, 0x54, 0x91, 0xcf, 0x60, 0xc0, 0xf1, 0x5a, 0x06, 0x35, 0xbc, 0x2d, 0x15,
+	0xfe, 0xbe, 0xc0, 0x1c, 0x02, 0x39, 0xc5, 0x02, 0x32, 0xdf, 0x82, 0xc0, 0x86, 0x56, 0xc8, 0x28,
+	0xaa, 0x7f, 0xfb, 0xdf, 0xc2, 0xf6, 0x89, 0xbe, 0x38, 0xcb, 0xc5, 0x63, 0x70, 0x72, 0x5c, 0xfd,
+	0xc0, 0x9a, 0xe1, 0x8a, 0x22, 0xff, 0x73, 0xd8, 0xfe, 0x06, 0x23, 0xac, 0x77, 0x5a, 0x05, 0x3b,
+	0x83, 0x47, 0x8a, 0x14, 0xfd, 0x52, 0x28, 0x58, 0xde, 0x81, 0x4e, 0x4a, 0x33, 0x25, 0xa1, 0x29,
+	0xb5, 0xa7, 0x2a, 0xfb, 0xcd, 0x3b, 0xd9, 0x6f, 0x2d, 0xb3, 0xff, 0x01, 0x48, 0x19, 0xc8, 0x52,
+	0x3f, 0x84, 0x0e, 0xea, 0x88, 0xe5, 0xfd, 0x61, 0x69, 0x35, 0x5d, 0x3a, 0xb1, 0xf9, 0xff, 0xcd,
+	0xf8, 0xa7, 0x30, 0x38, 0x45, 0x03, 0x73, 0xd7, 0xde, 0x5f, 0x01, 0x31, 0x74, 0x57, 0x2a, 0xd7,
+	0x2d, 0x4e, 0x60, 0x43, 0xe2, 0xb5, 0xb4, 0x88, 0xfa, 0xb7, 0x92, 0xd6, 0xd0, 0x7c, 0x1f, 0xd6,
+	0xcb, 0x7f, 0x3b, 0x30, 0xc8, 0xb5, 0x38, 0xc3, 0xec, 0x8a, 0x4d, 0x91, 0x30, 0xd8, 0xaa, 0x98,
+	0x91, 0xec, 0x97, 0x36, 0x5f, 0x65, 0x7d, 0xef, 0x60, 0x7d, 0x81, 0x21, 0xd3, 0xdf, 0xfe, 0xf5,
+	0xaf, 0xbf, 0x7f, 0x6f, 0x0e, 0xc8, 0xd6, 0xf8, 0xea, 0x68, 0xbc, 0xf0, 0x2a, 0x85, 0x5e, 0xc9,
+	0x83, 0x64, 0xaf, 0xd4, 0xa7, 0xee, 0x4d, 0x6f, 0x95, 0xb9, 0xfc, 0x4f, 0x74, 0x67, 0x97, 0xec,
+	0xa8, 0xce, 0x3f, 0xab, 0xa5, 0xbe, 0x2c, 0xfa, 0x8f, 0x0f, 0x7f, 0x21, 0x17, 0xd0, 0xaf, 0x9a,
+	0x97, 0x94, 0xa7, 0x5d, 0xe9, 0xeb, 0xd5, 0x40, 0xfb, 0x1a, 0xe8, 0x89, 0x5f, 0x5d, 0xe1, 0xb8,
+	0x30, 0x37, 0xf9, 0x11, 0xfa, 0x55, 0x73, 0x57, 0x90, 0x56, 0xfa, 0xde, 0xdb, 0x19, 0x99, 0xaf,
+	0xf4, 0x28, 0xff, 0x4a, 0x8f, 0xde, 0xa8, 0xaf, 0x74, 0xbe, 0xd5, 0xe1, 0xba, 0xad, 0x32, 0x80,
+	0x85, 0x65, 0xc9, 0xee, 0x12, 0xff, 0x95, 0x2b, 0xe3, 0xed, 0xad, 0xc9, 0x5a, 0x69, 0x9e, 0x6b,
+	0xa8, 0x67, 0x64, 0x5f, 0x43, 0x19, 0x57, 0x55, 0xc0, 0xc6, 0xd6, 0xe6, 0x14, 0x9c, 0xdc, 0xbe,
+	0xc4, 0xab, 0x2a, 0x55, 0xf6, 0x99, 0x57, 0xbb, 0x28, 0x4b, 0x10, 0xcb, 0xdb, 0xd8, 0xfe, 0x6a,
+	0x2d, 0x0e, 0xbd, 0x92, 0xf5, 0x2b, 0x7e, 0xa8, 0x5f, 0x89, 0x15, 0x40, 0x23, 0x0d, 0x34, 0xf4,
+	0xef, 0xdb, 0xe5, 0xb8, 0xad, 0xff, 0x92, 0x18, 0x7a, 0xa5, 0x8b, 0x52, 0xc1, 0xab, 0x5f, 0xa0,
+	0xb5, 0x62, 0xd9, 0xf5, 0x0e, 0xef, 0x5b, 0xcf, 0x23, 0x7f, 0xbe, 0x1e, 0xa8, 0xff, 0x03, 0xa2,
+	0x8b, 0x44, 0xc8, 0xe3, 0x57, 0x2f, 0x5e, 0xbc, 0x3a, 0xfa, 0x7a, 0xe3, 0x7d, 0x33, 0x3d, 0x3f,
+	0xef, 0xe8, 0x96, 0x5f, 0xfc, 0x17, 0x00, 0x00, 0xff, 0xff, 0x09, 0xc9, 0x2a, 0xff, 0x0a, 0x0a,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ grpc.ClientConn
+var _ grpc.ClientConnInterface
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
+const _ = grpc.SupportPackageIsVersion6
 
-// CalendarClient is the client API for Calendar service.
+// CalendarServiceClient is the client API for CalendarService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type CalendarClient interface {
+type CalendarServiceClient interface {
+	// Returns the calendars on the user's calendar list.
+	ListCalendars(ctx context.Context, in *ListCalendarsRequest, opts ...grpc.CallOption) (*ListCalendarsResponse, error)
+	// Returns metadata for a calendar.
+	GetCalendar(ctx context.Context, in *GetCalendarRequest, opts ...grpc.CallOption) (*Calendar, error)
+	// Creates a secondary calendar.
+	CreateCalendar(ctx context.Context, in *CreateCalendarRequest, opts ...grpc.CallOption) (*Calendar, error)
+	// Deletes a secondary calendar.
+	DeleteCalendar(ctx context.Context, in *DeleteCalendarRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Lists events in a calendar.
 	ListEvents(ctx context.Context, in *ListEventsRequest, opts ...grpc.CallOption) (*ListEventsResponse, error)
 	// Gets an event.
@@ -618,52 +942,96 @@ type CalendarClient interface {
 	DeleteEvent(ctx context.Context, in *DeleteEventRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
-type calendarClient struct {
-	cc *grpc.ClientConn
+type calendarServiceClient struct {
+	cc grpc.ClientConnInterface
 }
 
-func NewCalendarClient(cc *grpc.ClientConn) CalendarClient {
-	return &calendarClient{cc}
+func NewCalendarServiceClient(cc grpc.ClientConnInterface) CalendarServiceClient {
+	return &calendarServiceClient{cc}
 }
 
-func (c *calendarClient) ListEvents(ctx context.Context, in *ListEventsRequest, opts ...grpc.CallOption) (*ListEventsResponse, error) {
-	out := new(ListEventsResponse)
-	err := c.cc.Invoke(ctx, "/kordevaus.Calendar/ListEvents", in, out, opts...)
+func (c *calendarServiceClient) ListCalendars(ctx context.Context, in *ListCalendarsRequest, opts ...grpc.CallOption) (*ListCalendarsResponse, error) {
+	out := new(ListCalendarsResponse)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/ListCalendars", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *calendarClient) GetEvent(ctx context.Context, in *GetEventRequest, opts ...grpc.CallOption) (*Event, error) {
-	out := new(Event)
-	err := c.cc.Invoke(ctx, "/kordevaus.Calendar/GetEvent", in, out, opts...)
+func (c *calendarServiceClient) GetCalendar(ctx context.Context, in *GetCalendarRequest, opts ...grpc.CallOption) (*Calendar, error) {
+	out := new(Calendar)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/GetCalendar", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *calendarClient) CreateEvent(ctx context.Context, in *CreateEventRequest, opts ...grpc.CallOption) (*Event, error) {
-	out := new(Event)
-	err := c.cc.Invoke(ctx, "/kordevaus.Calendar/CreateEvent", in, out, opts...)
+func (c *calendarServiceClient) CreateCalendar(ctx context.Context, in *CreateCalendarRequest, opts ...grpc.CallOption) (*Calendar, error) {
+	out := new(Calendar)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/CreateCalendar", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *calendarClient) DeleteEvent(ctx context.Context, in *DeleteEventRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *calendarServiceClient) DeleteCalendar(ctx context.Context, in *DeleteCalendarRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/kordevaus.Calendar/DeleteEvent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/DeleteCalendar", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CalendarServer is the server API for Calendar service.
-type CalendarServer interface {
+func (c *calendarServiceClient) ListEvents(ctx context.Context, in *ListEventsRequest, opts ...grpc.CallOption) (*ListEventsResponse, error) {
+	out := new(ListEventsResponse)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/ListEvents", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *calendarServiceClient) GetEvent(ctx context.Context, in *GetEventRequest, opts ...grpc.CallOption) (*Event, error) {
+	out := new(Event)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/GetEvent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *calendarServiceClient) CreateEvent(ctx context.Context, in *CreateEventRequest, opts ...grpc.CallOption) (*Event, error) {
+	out := new(Event)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/CreateEvent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *calendarServiceClient) DeleteEvent(ctx context.Context, in *DeleteEventRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/kordevaus.CalendarService/DeleteEvent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CalendarServiceServer is the server API for CalendarService service.
+type CalendarServiceServer interface {
+	// Returns the calendars on the user's calendar list.
+	ListCalendars(context.Context, *ListCalendarsRequest) (*ListCalendarsResponse, error)
+	// Returns metadata for a calendar.
+	GetCalendar(context.Context, *GetCalendarRequest) (*Calendar, error)
+	// Creates a secondary calendar.
+	CreateCalendar(context.Context, *CreateCalendarRequest) (*Calendar, error)
+	// Deletes a secondary calendar.
+	DeleteCalendar(context.Context, *DeleteCalendarRequest) (*empty.Empty, error)
 	// Lists events in a calendar.
 	ListEvents(context.Context, *ListEventsRequest) (*ListEventsResponse, error)
 	// Gets an event.
@@ -674,118 +1042,218 @@ type CalendarServer interface {
 	DeleteEvent(context.Context, *DeleteEventRequest) (*empty.Empty, error)
 }
 
-// UnimplementedCalendarServer can be embedded to have forward compatible implementations.
-type UnimplementedCalendarServer struct {
+// UnimplementedCalendarServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedCalendarServiceServer struct {
 }
 
-func (*UnimplementedCalendarServer) ListEvents(ctx context.Context, req *ListEventsRequest) (*ListEventsResponse, error) {
+func (*UnimplementedCalendarServiceServer) ListCalendars(ctx context.Context, req *ListCalendarsRequest) (*ListCalendarsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCalendars not implemented")
+}
+func (*UnimplementedCalendarServiceServer) GetCalendar(ctx context.Context, req *GetCalendarRequest) (*Calendar, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCalendar not implemented")
+}
+func (*UnimplementedCalendarServiceServer) CreateCalendar(ctx context.Context, req *CreateCalendarRequest) (*Calendar, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCalendar not implemented")
+}
+func (*UnimplementedCalendarServiceServer) DeleteCalendar(ctx context.Context, req *DeleteCalendarRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCalendar not implemented")
+}
+func (*UnimplementedCalendarServiceServer) ListEvents(ctx context.Context, req *ListEventsRequest) (*ListEventsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListEvents not implemented")
 }
-func (*UnimplementedCalendarServer) GetEvent(ctx context.Context, req *GetEventRequest) (*Event, error) {
+func (*UnimplementedCalendarServiceServer) GetEvent(ctx context.Context, req *GetEventRequest) (*Event, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEvent not implemented")
 }
-func (*UnimplementedCalendarServer) CreateEvent(ctx context.Context, req *CreateEventRequest) (*Event, error) {
+func (*UnimplementedCalendarServiceServer) CreateEvent(ctx context.Context, req *CreateEventRequest) (*Event, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEvent not implemented")
 }
-func (*UnimplementedCalendarServer) DeleteEvent(ctx context.Context, req *DeleteEventRequest) (*empty.Empty, error) {
+func (*UnimplementedCalendarServiceServer) DeleteEvent(ctx context.Context, req *DeleteEventRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteEvent not implemented")
 }
 
-func RegisterCalendarServer(s *grpc.Server, srv CalendarServer) {
-	s.RegisterService(&_Calendar_serviceDesc, srv)
+func RegisterCalendarServiceServer(s *grpc.Server, srv CalendarServiceServer) {
+	s.RegisterService(&_CalendarService_serviceDesc, srv)
 }
 
-func _Calendar_ListEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CalendarService_ListCalendars_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCalendarsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalendarServiceServer).ListCalendars(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kordevaus.CalendarService/ListCalendars",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalendarServiceServer).ListCalendars(ctx, req.(*ListCalendarsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CalendarService_GetCalendar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCalendarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalendarServiceServer).GetCalendar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kordevaus.CalendarService/GetCalendar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalendarServiceServer).GetCalendar(ctx, req.(*GetCalendarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CalendarService_CreateCalendar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCalendarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalendarServiceServer).CreateCalendar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kordevaus.CalendarService/CreateCalendar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalendarServiceServer).CreateCalendar(ctx, req.(*CreateCalendarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CalendarService_DeleteCalendar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCalendarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalendarServiceServer).DeleteCalendar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/kordevaus.CalendarService/DeleteCalendar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalendarServiceServer).DeleteCalendar(ctx, req.(*DeleteCalendarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CalendarService_ListEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListEventsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CalendarServer).ListEvents(ctx, in)
+		return srv.(CalendarServiceServer).ListEvents(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/kordevaus.Calendar/ListEvents",
+		FullMethod: "/kordevaus.CalendarService/ListEvents",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CalendarServer).ListEvents(ctx, req.(*ListEventsRequest))
+		return srv.(CalendarServiceServer).ListEvents(ctx, req.(*ListEventsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Calendar_GetEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CalendarService_GetEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CalendarServer).GetEvent(ctx, in)
+		return srv.(CalendarServiceServer).GetEvent(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/kordevaus.Calendar/GetEvent",
+		FullMethod: "/kordevaus.CalendarService/GetEvent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CalendarServer).GetEvent(ctx, req.(*GetEventRequest))
+		return srv.(CalendarServiceServer).GetEvent(ctx, req.(*GetEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Calendar_CreateEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CalendarService_CreateEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CalendarServer).CreateEvent(ctx, in)
+		return srv.(CalendarServiceServer).CreateEvent(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/kordevaus.Calendar/CreateEvent",
+		FullMethod: "/kordevaus.CalendarService/CreateEvent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CalendarServer).CreateEvent(ctx, req.(*CreateEventRequest))
+		return srv.(CalendarServiceServer).CreateEvent(ctx, req.(*CreateEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Calendar_DeleteEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CalendarService_DeleteEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CalendarServer).DeleteEvent(ctx, in)
+		return srv.(CalendarServiceServer).DeleteEvent(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/kordevaus.Calendar/DeleteEvent",
+		FullMethod: "/kordevaus.CalendarService/DeleteEvent",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CalendarServer).DeleteEvent(ctx, req.(*DeleteEventRequest))
+		return srv.(CalendarServiceServer).DeleteEvent(ctx, req.(*DeleteEventRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Calendar_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "kordevaus.Calendar",
-	HandlerType: (*CalendarServer)(nil),
+var _CalendarService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "kordevaus.CalendarService",
+	HandlerType: (*CalendarServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "ListCalendars",
+			Handler:    _CalendarService_ListCalendars_Handler,
+		},
+		{
+			MethodName: "GetCalendar",
+			Handler:    _CalendarService_GetCalendar_Handler,
+		},
+		{
+			MethodName: "CreateCalendar",
+			Handler:    _CalendarService_CreateCalendar_Handler,
+		},
+		{
+			MethodName: "DeleteCalendar",
+			Handler:    _CalendarService_DeleteCalendar_Handler,
+		},
+		{
 			MethodName: "ListEvents",
-			Handler:    _Calendar_ListEvents_Handler,
+			Handler:    _CalendarService_ListEvents_Handler,
 		},
 		{
 			MethodName: "GetEvent",
-			Handler:    _Calendar_GetEvent_Handler,
+			Handler:    _CalendarService_GetEvent_Handler,
 		},
 		{
 			MethodName: "CreateEvent",
-			Handler:    _Calendar_CreateEvent_Handler,
+			Handler:    _CalendarService_CreateEvent_Handler,
 		},
 		{
 			MethodName: "DeleteEvent",
-			Handler:    _Calendar_DeleteEvent_Handler,
+			Handler:    _CalendarService_DeleteEvent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

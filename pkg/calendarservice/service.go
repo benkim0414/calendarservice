@@ -15,11 +15,65 @@ type service struct {
 }
 
 func New(ctx context.Context, opts ...option.ClientOption) (*service, error) {
-	client, err := calendar.NewService(ctx, option.WithScopes(calendar.CalendarEventsScope))
+	client, err := calendar.NewService(ctx, option.WithScopes(
+		calendar.CalendarScope,
+		calendar.CalendarEventsScope,
+	))
 	if err != nil {
 		return nil, err
 	}
 	return &service{client: client}, nil
+}
+
+func (svc *service) ListCalendars(ctx context.Context, req *calendarpb.ListCalendarsRequest) (*calendarpb.ListCalendarsResponse, error) {
+	res, err := svc.client.CalendarList.List().Do()
+	if err != nil {
+		return &calendarpb.ListCalendarsResponse{}, err
+	}
+	calendars := make([]*calendarpb.Calendar, 0)
+	for _, calendar := range res.Items {
+		calendars = append(calendars, &calendarpb.Calendar{
+			Id:          calendar.Id,
+			Summary:     calendar.Summary,
+			Description: calendar.Description,
+			Location:    calendar.Location,
+			TimeZone:    calendar.TimeZone,
+		})
+	}
+	return &calendarpb.ListCalendarsResponse{
+		Calendars:     calendars,
+		NextPageToken: res.NextPageToken,
+	}, nil
+}
+
+func (svc *service) GetCalendar(ctx context.Context, req *calendarpb.GetCalendarRequest) (*calendarpb.Calendar, error) {
+	calendarID := strings.Split(req.Name, "/")[1]
+	calendar, err := svc.client.Calendars.Get(calendarID).Do()
+	if err != nil {
+		return &calendarpb.Calendar{}, err
+	}
+	return newCalendar(calendar), nil
+}
+
+func (svc *service) CreateCalendar(ctx context.Context, req *calendarpb.CreateCalendarRequest) (*calendarpb.Calendar, error) {
+	calendar, err := svc.client.Calendars.Insert(&calendar.Calendar{
+		Summary:     req.Calendar.Summary,
+		Description: req.Calendar.Description,
+		TimeZone:    req.Calendar.TimeZone,
+	}).Do()
+	if err != nil {
+		return &calendarpb.Calendar{}, err
+	}
+	return newCalendar(calendar), nil
+}
+
+func (svc *service) DeleteCalendar(ctx context.Context, req *calendarpb.DeleteCalendarRequest) (*empty.Empty, error) {
+	calendarID := strings.Split(req.Name, "/")[1]
+	err := svc.client.Calendars.Delete(calendarID).Do()
+	if err != nil {
+		return &empty.Empty{}, err
+	}
+	return &empty.Empty{}, nil
 }
 
 func (svc *service) ListEvents(ctx context.Context, req *calendarpb.ListEventsRequest) (*calendarpb.ListEventsResponse, error) {
@@ -65,6 +119,16 @@ func (svc *service) DeleteEvent(ctx context.Context, req *calendarpb.DeleteEvent
 		return &empty.Empty{}, err
 	}
 	return &empty.Empty{}, nil
+}
+
+func newCalendar(calendar *calendar.Calendar) *calendarpb.Calendar {
+	return &calendarpb.Calendar{
+		Id:          calendar.Id,
+		Summary:     calendar.Summary,
+		Description: calendar.Description,
+		Location:    calendar.Location,
+		TimeZone:    calendar.TimeZone,
+	}
 }
 
 func newEvent(event *calendar.Event) *calendarpb.Event {
