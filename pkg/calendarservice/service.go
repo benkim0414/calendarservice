@@ -15,11 +15,35 @@ type service struct {
 }
 
 func New(ctx context.Context, opts ...option.ClientOption) (*service, error) {
-	client, err := calendar.NewService(ctx, option.WithScopes(calendar.CalendarEventsScope))
+	client, err := calendar.NewService(ctx, option.WithScopes(
+		calendar.CalendarScope,
+		calendar.CalendarEventsScope,
+	))
 	if err != nil {
 		return nil, err
 	}
 	return &service{client: client}, nil
+}
+
+func (svc *service) ListCalendars(ctx context.Context, req *calendarpb.ListCalendarsRequest) (*calendarpb.ListCalendarsResponse, error) {
+	res, err := svc.client.CalendarList.List().Do()
+	if err != nil {
+		return &calendarpb.ListCalendarsResponse{}, err
+	}
+	calendars := make([]*calendarpb.Calendar, 0)
+	for _, calendar := range res.Items {
+		calendars = append(calendars, &calendarpb.Calendar{
+			Id:          calendar.Id,
+			Summary:     calendar.Summary,
+			Description: calendar.Description,
+			Location:    calendar.Location,
+			TimeZone:    calendar.TimeZone,
+		})
+	}
+	return &calendarpb.ListCalendarsResponse{
+		Calendars:     calendars,
+		NextPageToken: res.NextPageToken,
+	}, nil
 }
 
 func (svc *service) GetCalendar(ctx context.Context, req *calendarpb.GetCalendarRequest) (*calendarpb.Calendar, error) {

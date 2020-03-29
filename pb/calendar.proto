@@ -105,6 +105,13 @@ message Attendee {
 service CalendarService {
   option (google.api.default_host) = "localhost:50051";
 
+  // Returns the calendars on the user's calendar list.
+  rpc ListCalendars(ListCalendarsRequest) returns (ListCalendarsResponse) {
+    option (google.api.http) = {
+      get: "/v1/calendars"
+    };
+  }
+
   // Returns metadata for a calendar.
   rpc GetCalendar(GetCalendarRequest) returns (Calendar) {
     option (google.api.http) = {
@@ -155,6 +162,23 @@ service CalendarService {
       delete: "/v1/{name=calendars/*/events/*}"
     };
   }
+}
+
+message ListCalendarsRequest {
+  // Maximum number of entries returned on one result page. By default the value
+  // is 100 entries. The page size can never be larger than 250 entries. Optional.
+  int32 page_size = 1;
+
+  // Token specifying which result page to return. Optional.
+  string page_token = 2;
+}
+
+message ListCalendarsResponse {
+  // Calendars that are present on the user's calendar list.
+  repeated Calendar calendars = 1;
+
+  // Token used to access the next page of this result.
+  string next_page_token = 2;
 }
 
 message GetCalendarRequest {
